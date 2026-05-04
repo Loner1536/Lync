@@ -345,6 +345,7 @@ interface LyncModule {
     readonly colorSequence: Lync.Codec<ColorSequence>;
 
     // ── Composites ──────────────────────────────────────────────────────
+    partialStruct<T>(this: void, codec: Lync.Codec<T>): Lync.Codec<Partial<T>>;
 
     struct<S extends Record<string, Lync.Codec<unknown>>>(
         this: void,
@@ -376,6 +377,7 @@ interface LyncModule {
     ): Lync.Codec<Map<K, V>>;
 
     optional<T>(this: void, codec: Lync.Codec<T>): Lync.Codec<T | undefined>;
+    nullable<T, S>(this: void, codec: Lync.Codec<T>, sentinel: S): Lync.Codec<T | S>;
 
     tuple<T extends Lync.Codec<unknown>[]>(
         this: void,

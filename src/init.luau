@@ -345,11 +345,15 @@ Lync.numberSequence = SeqC.numberSequence
 Lync.colorSequence = SeqC.colorSequence
 Lync.struct = StructC.struct
 Lync.deltaStruct = StructC.deltaStruct
+Lync.partialStruct = function(codec)
+    return StructC.partialStruct(codec, OptionalC.optional)
+end
 Lync.array = ArrayC.array
 Lync.deltaArray = ArrayC.deltaArray
 Lync.map = MapC.map
 Lync.deltaMap = MapC.deltaMap
 Lync.optional = OptionalC.optional
+Lync.nullable = OptionalC.nullable
 Lync.tuple = TupleC.define
 Lync.tagged = TaggedC.define
 Lync.enum = EnumC.define
