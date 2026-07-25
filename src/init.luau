@@ -363,4 +363,22 @@ Lync.nothing = NothingC.nothing
 Lync.unknown = UnknownC.unknown
 Lync.auto = AutoC.auto
 
+--[[
+    Standalone encode/decode — runs a codec's write/read outside of any
+    packet's send/on cycle, using the same Channel a packet would flush.
+    For serializing single values (e.g. bridging Lync's codecs into another
+    replication system's own serdes hook) without opening a real connection.
+]]
+function Lync.encode<T>(codec: Types.Codec<T>, value: T): (buffer, { Instance })
+    local ch = Channel.create()
+    codec.write(ch, value)
+    local snapshot, refs = Channel.sealAndDump(ch)
+    return snapshot, refs
+end
+
+function Lync.decode<T>(codec: Types.Codec<T>, data: buffer, refs: { Instance }?): T
+    local value = codec.read(data, 0, refs or {})
+    return value
+end
+
 return table.freeze(Lync)
