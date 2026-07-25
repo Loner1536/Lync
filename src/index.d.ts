@@ -419,15 +419,6 @@ interface LyncModule {
     readonly unknown: Lync.Codec<unknown>;
     /** Self-describing; nil/bool/numbers/strings/buffers/Roblox datatypes. */
     readonly auto: Lync.Codec<unknown>;
-
-    /**
-     * Runs a codec's write outside of any packet's send/on cycle — no
-     * connection involved, just the same Channel a packet would flush.
-     * Use to serialize a single value (e.g. bridging a Lync codec into
-     * another replication system's own serdes hook).
-     */
-    encode<T>(this: void, codec: Lync.Codec<T>, value: T): LuaTuple<[buffer, Instance[]]>;
-    decode<T>(this: void, codec: Lync.Codec<T>, data: buffer, refs?: Instance[]): T;
 }
 
 declare const Lync: LyncModule;
